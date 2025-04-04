@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const BankBranchSchema = new mongoose.Schema(
   {
+    // todo: auto generated branchId
+    //todo: Unique identifier for the branch, auto-generated
     branchId: {
       type: String,
       required: true,
@@ -15,6 +17,7 @@ const BankBranchSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    //todo: ifscCode auto generated based on branch name and city
     ifscCode: {
       type: String,
       required: true,

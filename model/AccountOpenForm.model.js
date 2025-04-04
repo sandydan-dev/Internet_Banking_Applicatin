@@ -77,6 +77,8 @@ const accountOpeningFormSchema = new mongoose.Schema({
   remarks: {
     type: String,
   },
+}, {
+  timestamps: true,
 });
 
 const AccountOpenForm = mongoose.model(

@@ -9,6 +9,7 @@ const connectionDatabase = require("./config/database.connection");
 const branchRouter = require("./route/bankBranch.route");
 const accountOpenRouter = require("./route/accountOpen.route");
 const customerProfileRouter = require('./route/customerProfile.route')
+const bankAccountRouter = require("./route/bankAccount.route");
 
 // connection database
 connectionDatabase();
@@ -24,8 +25,14 @@ app.get("/", (req, res) => {
 });
 
 // main routes
+// bank branch routes
 app.use("/api/v1/branch", branchRouter);
+// account open form routes
 app.use("/api/v1/account_form", accountOpenRouter);
+// customer profile routes
 app.use('/api/v1/customer_profile', customerProfileRouter)
+
+// bank account routes
+app.use("/api/v1/bank_account", bankAccountRouter);
 
 module.exports = { app };
