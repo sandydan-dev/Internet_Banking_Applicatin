@@ -15,9 +15,8 @@ const customerProfileSchema = new mongoose.Schema(
     },
     remarks: {
       type: String,
-      default:
-        "Your account opening request will review by bank employee",
-    },
+      default: "No remarks provided",
+    }
   },
   {
     timestamps: true,

@@ -27,10 +27,12 @@ const accountOpeningFormSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
+
   },
   email: {
     type: String,
     required: true,
+    default: "No email provided",
   },
   gender: {
     type: String,
@@ -76,6 +78,7 @@ const accountOpeningFormSchema = new mongoose.Schema({
   },
   remarks: {
     type: String,
+    default: "No remarks provided",
   },
 }, {
   timestamps: true,

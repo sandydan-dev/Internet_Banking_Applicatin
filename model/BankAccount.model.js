@@ -8,9 +8,7 @@ const BankAccountSchema = new mongoose.Schema(
       // required: true,
       unique: true,
       default: function () {
-        return `ACC${Math.floor(
-          1001 + Math.random() * 9999
-        ).toString()}`;
+        return `ACC${Math.floor(10001 + Math.random() * 99999).toString()}`;
       },
     },
     //todo: auto generated customerId
@@ -20,7 +18,7 @@ const BankAccountSchema = new mongoose.Schema(
       unique: true,
       default: function () {
         return `CUST${Math.floor(
-          10091 + Math.random() * 99999
+          1000001 + Math.random() * 9999999
         ).toString()}`;
       },
     },
@@ -31,12 +29,12 @@ const BankAccountSchema = new mongoose.Schema(
       unique: true,
       default: function () {
         return `786${Math.floor(
-          10001 + Math.random() * 99999
+          10000001 + Math.random() * 99999999
         ).toString()}`;
       },
     },
     // todo: get accountHolderId from AccountOpenForm
-    acoountHolderId: {
+    accountHolderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "AccountOpenForm",
       // required: true,
@@ -58,7 +56,17 @@ const BankAccountSchema = new mongoose.Schema(
     balance: { type: Number, default: 0 },
     status: {
       type: String,
-      enum: ["active", "inactive", "closed", "pending"],
+      enum: [
+        "active",
+        "inactive",
+        "closed",
+        "pending",
+        "suspended",
+        "blocked",
+        "deleted",
+        "fraud",
+        "freeze",
+      ],
       default: "pending",
     },
     employeeId: { type: String, required: true }, //todo: Employee ID of the bank employee who opened the account

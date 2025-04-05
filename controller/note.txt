@@ -17,5 +17,41 @@
 ///////////////////////////////////////////////////////////////////////
 
 # CUSTOMER PROFILE CREATING THERE OWN PAGE
-# endpoint : 
+# endpoint : http://localhost:4002/api/v1/customer_profile/create_profile
 # PUSH DUMMY DATA
+{
+    "fullName": "Arjun Patel",
+    "email": "arjun.patel@example.com",
+    "phoneNumber": "+91-9876543210",
+    "address": "101 Green Park, Mumbai, Maharashtra, India"
+  }
+
+//////////////////////////////////////////////////////////////////////
+
+# ACCOUNT OPENING FORM 
+# endpoint : http://localhost:4002/api/v1/account_form/account_open_form
+# PUSH DUMMY DATA
+{
+    "branchId": "67f1098c51c1b4795aa97676",
+    "fullName": "Anjali Deshmukh",
+    "dateOfBirth": "1985-03-20",
+    "phoneNumber": "+91-712-9876543",
+    "email": "anjali.deshmukh@example.com",
+    "gender": "Female",
+    "street": "456 Civil Lines",
+    "city": "Nagpur",
+    "state": "Maharashtra",
+    "zipcode": "440001",
+    "identityProof": "Pan Card",
+    "addressProof": "Rental Agreement",
+    "occupation": "Doctor",
+    "incomeRange": "₹10,00,000 - ₹15,00,000"
+}
+
+# GENERATE ACCOUNT NUMBER FOR CUSTOMER
+# endpoint : http://localhost:4002/api/v1/bank_account/create_bank_account
+# PUSH DUMMY DATA
+{
+    "accountHolderId": "67f174d6b67ba8a144eb9e4c", // account holder opening form
+    "status": "active"
+}
