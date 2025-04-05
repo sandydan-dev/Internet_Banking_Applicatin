@@ -8,7 +8,7 @@ const createBankCustomerAccount = async (req, res) => {
     const user = req.user;
 
     console.log("employee id: ", user);
-    // get the data from the request body from the BankAccount model
+    //todo:  get the data from the request body from the BankAccount model
     const {
       accountId,
       customerId,

@@ -9,7 +9,7 @@ const authorizeRole = require("../middleware/checkRole");
 // bank account controller
 const {
   createBankCustomerAccount,
-} = require("../controller/BankAccount.controller");
+} = require("../controller/bankAccount.controller");
 
 // bank account routes
 router.post(
