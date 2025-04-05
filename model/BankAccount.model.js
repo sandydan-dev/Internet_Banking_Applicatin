@@ -5,33 +5,33 @@ const BankAccountSchema = new mongoose.Schema(
     //todo: auto generated accountId
     accountId: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
       default: function () {
-        return `ACC${Date.now()}${Math.floor(
-          10000 + Math.random() * 99999
+        return `ACC${Math.floor(
+          1001 + Math.random() * 9999
         ).toString()}`;
       },
     },
     //todo: auto generated customerId
     customerId: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
       default: function () {
-        return `CUST${Date.now()}${Math.floor(
-          100000 + Math.random() * 90000
+        return `CUST${Math.floor(
+          10091 + Math.random() * 99999
         ).toString()}`;
       },
     },
     //todo: auto generated branchId
     accountNumber: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
       default: function () {
-        return `786${Date.now()}${Math.floor(
-          10000000 + Math.random() * 90000000
+        return `786${Math.floor(
+          10001 + Math.random() * 99999
         ).toString()}`;
       },
     },
@@ -39,7 +39,7 @@ const BankAccountSchema = new mongoose.Schema(
     acoountHolderId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "AccountOpenForm",
-      required: true,
+      // required: true,
     },
     openingDate: { type: Date, default: Date.now },
     closingDate: { type: Date, default: null },
@@ -61,7 +61,7 @@ const BankAccountSchema = new mongoose.Schema(
       enum: ["active", "inactive", "closed", "pending"],
       default: "pending",
     },
-    employeeId: { type: String, required: true },
+    employeeId: { type: String, required: true }, //todo: Employee ID of the bank employee who opened the account
   },
   { timestamps: true }
 );

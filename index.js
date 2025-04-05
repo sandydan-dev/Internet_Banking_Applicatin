@@ -24,15 +24,18 @@ app.get("/", (req, res) => {
   res.send("hellye user");
 });
 
-// main routes
-// bank branch routes
+//todo: main routes
+
+//todo: bank branch routes
 app.use("/api/v1/branch", branchRouter);
-// account open form routes
+
+//todo: account open form routes
 app.use("/api/v1/account_form", accountOpenRouter);
-// customer profile routes
+
+//todo: customer profile routes
 app.use('/api/v1/customer_profile', customerProfileRouter)
 
-// bank account routes
+//todo bank account routes
 app.use("/api/v1/bank_account", bankAccountRouter);
 
 module.exports = { app };

@@ -1,0 +1,21 @@
+# BANK BRANCH CONTROLLER DATA
+# endpoint : http://localhost:4002/api/v1/branch/create_branch_data
+# Push dummy data
+
+  {
+    "branchName": "Central Bank Nagpur",
+    "address": "123 Sitabuldi Road",
+    "city": "Nagpur",
+    "state": "Maharashtra",
+    "zipCode": "440012",
+    "phoneNumber": "+91-7121234567",
+    "email": "central.nagpur@bank.com",
+    "branchManager": "Ramesh Kulkarni",
+    "atmAvailability": 15
+  }
+  
+///////////////////////////////////////////////////////////////////////
+
+# CUSTOMER PROFILE CREATING THERE OWN PAGE
+# endpoint : 
+# PUSH DUMMY DATA

@@ -7,7 +7,7 @@ const createBankCustomerAccount = async (req, res) => {
     // get employeeId from the token
     const user = req.user;
 
-    console.log("employee id: ", user);
+    console.log("employee id: ", user.user);
     //todo:  get the data from the request body from the BankAccount model
     const {
       accountId,
@@ -15,7 +15,6 @@ const createBankCustomerAccount = async (req, res) => {
       accountNumber,
       accountHolderId,
       status,
-      employeeId,
     } = req.body;
 
     //todo:  check if the accountId is already exist in the database
@@ -55,16 +54,26 @@ const createBankCustomerAccount = async (req, res) => {
       });
     }
 
+    // todo: find the accountHolderId in the AccountOpenForm model
+    const accountHolder = await AccountOpenForm.findOne({
+      _id: accountHolderId,
+    });
+
     // create a new bank account
     const newBankAccount = new BankAccount({
+      accountHolderId: accountHolder,
       status,
-      employeeId: user, //todo: to check if the employeeId is the same as the one in the token
+      employeeId: user.user, //todo: to check if the employeeId is the same as the one in the token
     });
+
+
+    const saveBankAccount = await newBankAccount.save();
+    console.log("Bank Account created successfully", saveBankAccount);
 
     //todo: return success if all the data is valid
     return res.status(200).json({
       message: "success",
-      data: user,
+      data: saveBankAccount,
     });
   } catch (error) {
     res.status(500).json({

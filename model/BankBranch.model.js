@@ -6,7 +6,6 @@ const BankBranchSchema = new mongoose.Schema(
     //todo: Unique identifier for the branch, auto-generated
     branchId: {
       type: String,
-      required: true,
       unique: true,
       default: function () {
         return `B-${Math.floor(1001 + Math.random() * 9999).toString()}`;
@@ -20,7 +19,6 @@ const BankBranchSchema = new mongoose.Schema(
     //todo: ifscCode auto generated based on branch name and city
     ifscCode: {
       type: String,
-      required: true,
       unique: true,
       default: function () {
         const cityCode = this.city
