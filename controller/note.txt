@@ -1,3 +1,6 @@
+I have created 2 services 1st is user role base authentication like customer, employee, admin, and 2nd services is internet banking application in the 2nd services i have created model like BankBranch model, Customer Profile model, Account Opening Form model, Bank Account model which generate account number for customer, now i want after generating account number for customer which model I can  create to transfer money to customer to customer, but first Customer need to deposite money then customer can available to transfer money to another account so can you guide me how to create this model, but customer need to deposite first then customer can transfer to another account number do you understand what I trying to say you?
+
+
 # BANK BRANCH CONTROLLER DATA
 # endpoint : http://localhost:4002/api/v1/branch/create_branch_data
 # Push dummy data
@@ -54,4 +57,25 @@
 {
     "accountHolderId": "67f174d6b67ba8a144eb9e4c", // account holder opening form
     "status": "active"
+}
+
+
+# DEPOSIT AMOUNT TO ACCOUNT NUMBER
+# endpoint : http://localhost:4002/api/v1/transaction/deposit
+
+{
+    "accountNumber": "78640721583",
+    "amount": 5000,
+    "remarks": "Initial deposit for savings account"
+}
+
+
+# TRANSFER MONEY BETWEEN ACCOUNT TO ACCOUNT
+# endpoint : http://localhost:4002/api/v1/transaction/tranfer_money
+
+{
+  "senderAccountNumber": "78640721583",
+  "receiverAccountNumber": "78612345678",
+  "amount": 2000,
+  "remarks": "Payment for services"
 }

@@ -10,6 +10,7 @@ const branchRouter = require("./route/bankBranch.route");
 const accountOpenRouter = require("./route/accountOpen.route");
 const customerProfileRouter = require("./route/customerProfile.route");
 const bankAccountRouter = require("./route/bankAccount.route");
+const transactionRouter = require("./route/transaction.route");
 
 // connection database
 connectionDatabase();
@@ -37,5 +38,8 @@ app.use("/api/v1/account_form", accountOpenRouter);
 
 //todo bank account routes
 app.use("/api/v1/bank_account", bankAccountRouter);
+
+//todo: transaction account route, for deposite, withdraw, acc to acc
+app.use("/api/v1/transaction", transactionRouter);
 
 module.exports = { app };

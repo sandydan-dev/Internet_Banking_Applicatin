@@ -271,6 +271,7 @@ const getAllFreezeBankAccounts = async (req, res) => {
   }
 };
 
+
 module.exports = {
   createBankCustomerAccount,
   getAllActiveBankAccounts,
