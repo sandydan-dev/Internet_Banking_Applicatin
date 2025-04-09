@@ -79,3 +79,54 @@ I have created 2 services 1st is user role base authentication like customer, em
   "amount": 2000,
   "remarks": "Payment for services"
 }
+
+
+# GENERATE CARN NUMBER FOR CUSTOMER
+# endpoint : http://localhost:4002/api/v1/card_transaction/activate_card/78640721583
+{
+    "cardType": "debit",
+    "status": "active"
+}
+
+
+
+// MODELS TO CREATE
+Loan Model
+A model to manage loan accounts, including loan types, interest rates, repayment schedules, and statuses.
+Fields: loanId, customerId, loanType, loanAmount, interestRate, repaymentSchedule, status, remarks.
+
+Card Model
+A model to manage debit/credit cards issued to customers.
+Fields: cardId, customerId, cardType (debit/credit), cardNumber, expiryDate, cvv, status.
+
+Fixed Deposit Model
+A model to manage fixed deposit accounts.
+Fields: fdId, customerId, depositAmount, interestRate, maturityDate, status.
+
+Recurring Deposit Model
+A model to manage recurring deposit accounts.
+Fields: rdId, customerId, monthlyDepositAmount, interestRate, maturityDate, status.
+
+Beneficiary Model
+A model to manage beneficiaries for fund transfers.
+Fields: beneficiaryId, customerId, beneficiaryName, accountNumber, bankName, ifscCode, status.
+
+Transaction History Model
+A model to store detailed transaction logs for auditing purposes.
+Fields: transactionId, accountId, transactionType, amount, date, status, remarks.
+
+Notification Model
+A model to manage notifications sent to customers (e.g., transaction alerts, account updates).
+Fields: notificationId, customerId, message, type, status, timestamp.
+
+Audit Log Model
+A model to track changes and actions performed by users or employees for compliance purposes.
+Fields: logId, userId, action, timestamp, details.
+
+Insurance Model
+A model to manage insurance policies linked to customer accounts.
+Fields: policyId, customerId, policyType, premiumAmount, coverageAmount, status.
+
+Investment Model
+A model to manage customer investments in mutual funds, stocks, etc.
+Fields: investmentId, customerId, investmentType, amount, returns, status.

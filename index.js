@@ -11,6 +11,8 @@ const accountOpenRouter = require("./route/accountOpen.route");
 const customerProfileRouter = require("./route/customerProfile.route");
 const bankAccountRouter = require("./route/bankAccount.route");
 const transactionRouter = require("./route/transaction.route");
+const cardRouter = require('./route/card.route')
+
 
 // connection database
 connectionDatabase();
@@ -41,5 +43,9 @@ app.use("/api/v1/bank_account", bankAccountRouter);
 
 //todo: transaction account route, for deposite, withdraw, acc to acc
 app.use("/api/v1/transaction", transactionRouter);
+
+//todo : card to card transfer money to bank account
+app.use('/api/v1/card_transaction', cardRouter)
+
 
 module.exports = { app };
