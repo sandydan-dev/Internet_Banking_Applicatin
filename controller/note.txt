@@ -17,7 +17,7 @@ I have created 2 services 1st is user role base authentication like customer, em
     "atmAvailability": 15
   }
   
-///////////////////////////////////////////////////////////////////////
+-------------------------------------------------------------------------------
 
 # CUSTOMER PROFILE CREATING THERE OWN PAGE
 # endpoint : http://localhost:4002/api/v1/customer_profile/create_profile
@@ -29,7 +29,7 @@ I have created 2 services 1st is user role base authentication like customer, em
     "address": "101 Green Park, Mumbai, Maharashtra, India"
   }
 
-//////////////////////////////////////////////////////////////////////
+-------------------------------------------------------------------------------
 
 # ACCOUNT OPENING FORM 
 # endpoint : http://localhost:4002/api/v1/account_form/account_open_form
@@ -51,6 +51,9 @@ I have created 2 services 1st is user role base authentication like customer, em
     "incomeRange": "₹10,00,000 - ₹15,00,000"
 }
 
+-------------------------------------------------------------------------------
+
+
 # GENERATE ACCOUNT NUMBER FOR CUSTOMER
 # endpoint : http://localhost:4002/api/v1/bank_account/create_bank_account
 # PUSH DUMMY DATA
@@ -59,6 +62,7 @@ I have created 2 services 1st is user role base authentication like customer, em
     "status": "active"
 }
 
+-------------------------------------------------------------------------------
 
 # DEPOSIT AMOUNT TO ACCOUNT NUMBER
 # endpoint : http://localhost:4002/api/v1/transaction/deposit
@@ -68,6 +72,8 @@ I have created 2 services 1st is user role base authentication like customer, em
     "amount": 5000,
     "remarks": "Initial deposit for savings account"
 }
+
+-------------------------------------------------------------------------------
 
 
 # TRANSFER MONEY BETWEEN ACCOUNT TO ACCOUNT
@@ -80,15 +86,60 @@ I have created 2 services 1st is user role base authentication like customer, em
   "remarks": "Payment for services"
 }
 
+-------------------------------------------------------------------------------
+
 
 # GENERATE CARN NUMBER FOR CUSTOMER
 # endpoint : http://localhost:4002/api/v1/card_transaction/activate_card/78640721583
+http://localhost:4002/api/v1/card_transaction/activate_card/78642868260
 {
     "cardType": "debit",
     "status": "active"
 }
 
+-------------------------------------------------------------------------------
 
+# BLOCK CARD NUMBER
+# endpoint : http://localhost:4002/api/v1/card_transaction/card_block/7735593412209794
+
+{
+  "status" : "blocked"
+}
+
+-------------------------------------------------------------------------------
+
+
+# CARD TO CARD TRANSFER MONEY
+# endpoint : http://localhost:4002/api/v1/card_transaction/card_to_card
+
+{
+    "fromCardNumber": "7735593412209794",
+    "toCardNumber": "4015591171876235",
+    "amount": 500,
+    "cvv": "263"
+}
+
+-------------------------------------------------------------------------------
+
+# CARD TO ACCOUNT TRANSFER MONEY
+# endpoint : http://localhost:4002/api/v1/card_transaction/card_to_account
+{
+    "cardNumber": "7735593412209794",
+    "accountNumber": "78642868260",
+    "amount": 100,
+    "cvv": "263"
+}
+
+
+# ACCOUNT TO CARD TRANSFER MONEY
+# endpoint : http://localhost:4002/api/v1/card_transaction/account_to_card
+{
+    "accountNumber": "78642868260",
+    "cardNumber": "7735593412209794",
+    "amount": 100
+}
+
+-------------------------------------------------------------------------------
 
 // MODELS TO CREATE
 Loan Model

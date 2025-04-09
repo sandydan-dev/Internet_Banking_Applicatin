@@ -30,7 +30,9 @@ const CardSchema = new mongoose.Schema(
       type: String,
       unique: true,
       default: function () {
-        return `${Math.floor(1000000000000000 + Math.random() * 9000000000000000)}`;
+        return `${Math.floor(
+          1000000000000000 + Math.random() * 9000000000000000
+        )}`;
       },
     },
     // expiry set to from today then expire on after 5 year later
