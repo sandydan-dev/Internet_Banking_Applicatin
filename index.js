@@ -29,19 +29,19 @@ app.get("/", (req, res) => {
 
 //todo: main routes
 
-//todo: bank branch routes
+//todo: bank branch routes ✅
 app.use("/api/v1/branch", branchRouter);
 
-//todo: customer profile routes
+//todo: customer profile routes ✅
 app.use("/api/v1/customer_profile", customerProfileRouter);
 
-//todo: account open form routes
+//todo: account open form routes ✅
 app.use("/api/v1/account_form", accountOpenRouter);
 
-//todo bank account routes
+//todo bank account routes ✅
 app.use("/api/v1/bank_account", bankAccountRouter);
 
-//todo: transaction account route, for deposite, withdraw, acc to acc
+//todo: transaction account route, for deposite, withdraw, acc to acc ✅
 app.use("/api/v1/transaction", transactionRouter);
 
 //todo : card to card transfer money to bank account

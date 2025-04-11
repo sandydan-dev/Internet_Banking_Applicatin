@@ -14,7 +14,7 @@ const {
 // routes
 
 //todo: only deposite receiver money
-// endpoint : http://localhost:4002/api/v1/transaction/deposit
+// endpoint : http://localhost:4002/api/v1/transaction/deposit ✅
 router.post(
   "/deposit",
   verifyToken,

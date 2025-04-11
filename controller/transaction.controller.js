@@ -1,7 +1,8 @@
 const BankAccount = require("../model/BankAccount.model");
 const Transaction = require("../model/Transaction.model");
+const TransactionHistory = require("../model/TransactionHistory.model");
 
-//todo: deposite money to BankAccount
+//todo: deposite money to BankAccount  ✅
 const depositeMoneyToAccountNumber = async (req, res) => {
   try {
     const { accountNumber, amount, remarks } = req.body;
@@ -19,14 +20,14 @@ const depositeMoneyToAccountNumber = async (req, res) => {
       "accountHolderId"
     );
 
-    // If account is not found, return an error
+    // If account is not found
     if (!account) {
       return res.status(404).json({
         message: "Account not found. Please check the account number.",
       });
     }
 
-    // check if account is active
+    // Check if account is not active
     if (account.status !== "active") {
       return res.status(400).json({
         message:
@@ -34,24 +35,36 @@ const depositeMoneyToAccountNumber = async (req, res) => {
       });
     }
 
-    // fetch the account holder name from the accountHolderId
+    // Fetch the account holder name from the accountHolderId
     const accountHolder = account.accountHolderId.fullName;
 
-    // update the account balance
-    account.balance = amount;
+    // Update the account balance by adding the deposit amount
+    account.balance += amount; // Add the new amount to the existing balance
     const updatedAccount = await account.save();
 
+    // Create a new deposit transaction
     const newTransaction = await Transaction.create({
-      receiverAccountNumber: account._id,
-      accoountHolderName: accountHolder,
-      amount,
+      receiverAccountNumber: account.accountNumber,
+      accoountHolderName: accountHolder, // holder name
+      amount, // deposit amount
       transactionType: "deposit",
       status: "completed",
       remarks,
     });
 
+    // Dynamically add transaction history
+    await TransactionHistory.create({
+      receiverAccountNumber: account.accountNumber, // Receiver's account number
+      accoountHolderName: accountHolder, // Receiver's account number
+      transactionType: "deposit",
+      amount,
+      status: "completed",
+      remarks,
+      depositedBy: accountHolder, // Use the receiver's name as the depositor
+    });
+
     return res.status(201).json({
-      message: "Deposite successfully",
+      message: "Deposit successfully",
       account: updatedAccount,
       transaction: newTransaction,
     });
@@ -63,14 +76,13 @@ const depositeMoneyToAccountNumber = async (req, res) => {
   }
 };
 
-// transfer money between both sender and receiver account
-
+//todo: transfer money between both sender and receiver account  ✅
 const transferMoneyBetweenAccounts = async (req, res) => {
   try {
     const { senderAccountNumber, receiverAccountNumber, amount, remarks } =
       req.body;
 
-    // validate input
+    // Validate input
     if (
       !senderAccountNumber ||
       !receiverAccountNumber ||
@@ -83,83 +95,98 @@ const transferMoneyBetweenAccounts = async (req, res) => {
       });
     }
 
-    // find the sender account number
+    // Find the sender account
     const senderAccount = await BankAccount.findOne({
       accountNumber: senderAccountNumber,
-    }).populate({
-      path: "accountHolderId",
-      select: "fullName", // Fetch only the fullName field
-    });
+    }).populate("accountHolderId");
 
     if (!senderAccount) {
       return res.status(404).json({ message: "Sender account not found" });
     }
 
-    // check if the sender account is active
+    // Check if the sender account is active
     if (senderAccount.status !== "active") {
       return res.status(400).json({
         message:
-          "Sender account is not active, Please activate before deposite",
+          "Sender account is not active, Please activate before transfer",
       });
     }
 
-    // check if sender account has insufficient balance
+    // Check if sender account has insufficient balance
     if (senderAccount.balance < amount) {
       return res
         .status(400)
         .json({ message: "Insufficient balance in sender account" });
     }
 
-    // find the receiver account
+    // Find the receiver account
     const receiverAccount = await BankAccount.findOne({
       accountNumber: receiverAccountNumber,
-    }).populate({
-      path: "accountHolderId",
-      select: "fullName", // Fetch only the fullName field
-    });
+    }).populate("accountHolderId");
 
-    // if receiver account not found
+    // If receiver account not found
     if (!receiverAccount) {
       return res.status(404).json({ message: "Receiver account not found" });
     }
 
-    // check if receiver account is active
+    // Check if receiver account is active
     if (receiverAccount.status !== "active") {
       return res.status(400).json({
         message:
-          "Receiver account is not active, Please activate before deposite",
+          "Receiver account is not active, Please activate before transfer",
       });
     }
 
-    // fetch the account holder name
-    const senderName = await senderAccount.accountHolderId.fullName;
+    // Fetch the sender and receiver names
+    const senderName = senderAccount.accountHolderId.fullName;
+    const receiverName = receiverAccount.accountHolderId.fullName;
 
-    if (senderAccount.accountHolderId.fullName !== senderName) {
-      return res.status(400).json({
-        message: `Sender account number and account holder name do not match.`,
-      });
-    }
-
-    // deduct the amount from the sender account
+    // Deduct the amount from the sender account
     senderAccount.balance -= amount;
     const updatedSenderAccount = await senderAccount.save();
 
-    // add the the amount to receiver account
+    // Add the amount to the receiver account
     receiverAccount.balance += amount;
     const updatedReceiverAccount = await receiverAccount.save();
 
-    // transaction account to account
+    // Create a new transaction
     const newTransaction = await Transaction.create({
-      senderAccountNumber: senderAccount._id,
-      receiverAccountNumber: receiverAccount._id,
-      accoountHolderName: `Sender: ${senderName}`,
+      senderAccountNumber: senderAccount.accountNumber,
+      receiverAccountNumber: receiverAccount.accountNumber,
+      accoountHolderName: `Sender: ${senderName}, Receiver: ${receiverName}`,
       amount,
       transactionType: "transfer",
       status: "completed",
       remarks,
     });
 
-    // if all transaction is good return success response
+    // Dynamically add a single transaction history entry for sender
+    await TransactionHistory.create({
+      senderAccountNumber: senderAccount.accountNumber,
+      receiverAccountNumber: receiverAccount.accountNumber,
+      holderName: senderName, // Add sender's name
+      transactionType: "account_to_account",
+      amount,
+      status: "completed",
+      remarks,
+      depositedBy: senderName, // Sender's name
+      transactionDescription: `Sender: ${senderName} transferred ${amount} to Receiver: ${receiverName}`,
+    });
+
+    // Dynamically add a transaction history entry for the receiver
+    await TransactionHistory.create({
+      senderAccountNumber: senderAccount.accountNumber, // sender account number
+      receiverAccountNumber: receiverAccount.accountNumber, // receiver account number
+      holderName: receiverName, // Add receiver's name
+      transactionType: "account_to_account",
+      amount,
+      status: "completed",
+      remarks,
+      depositedBy: senderName, // Sender's name
+      transactionDescription: `Receiver: ${receiverName} received ${amount} from Sender: ${senderName}`, // Add description
+    });
+
+    // If all transactions are successful, return success response
     return res.status(201).json({
       message: "Transfer Successfully",
       senderAccount: updatedSenderAccount,

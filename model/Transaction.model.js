@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const TransactionSchema = new mongoose.Schema(
   {
+    // auto generated transaction id
     transactionId: {
       type: String,
       unique: true,
@@ -9,20 +10,19 @@ const TransactionSchema = new mongoose.Schema(
         return `TXN${Date.now()}${Math.floor(10000 + Math.random() * 90000)}`;
       },
     },
+    // Sender's account number
     senderAccountNumber: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BankAccount", // Reference to the sender's account
+      type: String, 
     },
+    // Receiver's account number
     receiverAccountNumber: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "BankAccount", // Reference to the receiver's account
+      type: String, 
     },
-
-    // name of the account holder
+    // account holder name
     accoountHolderName: {
       type: String,
     },
-
+    // amount to be added
     amount: {
       type: Number,
       required: true,
@@ -42,6 +42,7 @@ const TransactionSchema = new mongoose.Schema(
       type: String,
       maxlength: 255,
     },
+    // auto generated date 
     transactionDate: {
       type: Date,
       default: Date.now,

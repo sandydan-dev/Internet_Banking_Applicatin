@@ -1,5 +1,6 @@
 const BankAccount = require("../model/BankAccount.model");
 const Card = require("../model/Card.model");
+const TransactionHistory = require("../model/TransactionHistory.model");
 
 //todo: activate card number for customer
 const activateCardNumber = async (req, res) => {
@@ -168,7 +169,7 @@ const transferCardToCard = async (req, res) => {
         .json({ message: "Receiver card number not found" });
     }
 
-    // Validate CVV for the source card
+    // Validate if CVV for the sender card
     if (fromCard.cvv !== cvv) {
       return res
         .status(400)
@@ -215,6 +216,26 @@ const transferCardToCard = async (req, res) => {
     // Save the updated bank accounts
     await fromBankAccount.save();
     await toBankAccount.save();
+
+    // Dynamically add transaction history for sender
+    await TransactionHistory.create({
+      cardId: fromCard._id,
+      transactionType: "card_to_card",
+      senderCardId: fromCard._id,
+      receiverCardId: toCard._id,
+      amount,
+      status: "completed",
+    });
+
+    // Dynamically add transaction history for receiver
+    await TransactionHistory.create({
+      cardId: toCard._id,
+      transactionType: "card_to_card",
+      senderCardId: fromCard._id,
+      receiverCardId: toCard._id,
+      amount,
+      status: "completed",
+    });
 
     return res.status(201).json({
       message: "Transfer successful.",
@@ -287,6 +308,16 @@ const transferCardToAccount = async (req, res) => {
     await fromBankAccount.save();
     await bankAccount.save();
 
+    // Dynamically add transaction history
+    await TransactionHistory.create({
+      cardId: card._id,
+      transactionType: "card_to_account",
+      senderCardId: card._id,
+      receiverAccountId: bankAccount._id,
+      amount,
+      status: "completed",
+    });
+
     return res.status(200).json({
       message: "Transfer successful.",
       fromBankAccount: {
@@ -356,6 +387,16 @@ const transferAccountToCard = async (req, res) => {
     // Save the updated bank accounts
     await bankAccount.save();
     await receiverBankAccount.save();
+
+    // Dynamically add transaction history
+    await TransactionHistory.create({
+      accountId: bankAccount._id,
+      transactionType: "account_to_card",
+      senderAccountId: bankAccount._id,
+      receiverCardId: card._id,
+      amount,
+      status: "completed",
+    });
 
     return res.status(200).json({
       message: "Transfer successful.",
